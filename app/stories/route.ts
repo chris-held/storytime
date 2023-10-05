@@ -39,12 +39,43 @@ export async function POST(request: Request) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new Error("Must be logged in to create stories");
+  }
+
+  const { data: profile } = await supabase
+    .from("user_profile")
+    .select()
+    .eq("user_id", user.id)
+    .maybeSingle();
+
+  if (!profile) {
+    throw new Error("no profile found for user");
+  }
+
+  if (
+    profile.free_stories_remaining === null ||
+    profile.free_stories_remaining === 0
+  ) {
+    throw new Error("no free runs remain for user");
+  }
+
+  await supabase
+    .from("user_profile")
+    .update({
+      free_stories_remaining: profile.free_stories_remaining - 1,
+    })
+    .eq("user_id", user.id)
+    .select();
+
   const { data, error } = await supabase
     .from("user_stories")
     .insert([
       {
         ...story,
-        user_id: user?.id,
+        prompt,
+        user_id: user.id,
       },
     ])
     .select();
