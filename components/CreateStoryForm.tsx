@@ -3,7 +3,11 @@
 import React from "react";
 import { Button } from "./ui/button";
 
-const CreateStoryForm = () => {
+type Props = {
+  disabled?: boolean;
+};
+
+const CreateStoryForm: React.FC<Props> = ({ disabled }) => {
   return (
     <form
       className="flex-1 flex flex-col w-full justify-center gap-2 text-foreground mt-4"
@@ -16,7 +20,11 @@ const CreateStoryForm = () => {
         rows={6}
         placeholder="Tell me a story about..."
       />
-      <Button type="submit" className="w-80 m-auto text-center">
+      <Button
+        type="submit"
+        className="w-80 m-auto text-center"
+        disabled={disabled}
+      >
         Write!
         <svg
           xmlns="http://www.w3.org/2000/svg"

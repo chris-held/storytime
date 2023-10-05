@@ -44,7 +44,11 @@ export default async function Index() {
             to be about? Themes, characters, time period, you can be as vague or
             specific as you want.
           </p>
-          <CreateStoryForm />
+          <CreateStoryForm
+            disabled={
+              free_stories_remaining === null || free_stories_remaining === 0
+            }
+          />
         </CardContent>
       </Card>
     </>
