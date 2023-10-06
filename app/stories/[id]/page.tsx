@@ -4,6 +4,8 @@ import { Database } from "@/types/supabase";
 import { redirect } from "next/navigation";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
+export const dynamic = "force-dynamic";
+
 export default async function Index({ params }: { params: { id: string } }) {
   const supabase = createServerComponentClient<Database>({ cookies });
   const { data, error } = await supabase

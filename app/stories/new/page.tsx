@@ -8,6 +8,8 @@ import FreeStoryBanner from "@/components/FreeStoryBanner";
 import { Database } from "@/types/supabase";
 import { redirect } from "next/navigation";
 
+export const dynamic = "force-dynamic";
+
 export default async function Index() {
   // TODO - a lot of this db stuff should be refactored so it can be reused
   // this is copied across profile as well

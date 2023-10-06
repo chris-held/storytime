@@ -4,8 +4,6 @@ import Link from "next/link";
 import { Card, CardDescription, CardHeader } from "./ui/card";
 import { Database } from "@/types/supabase";
 
-export const dynamic = "force-dynamic";
-
 type Props = {
   storiesRemaining: number;
 };
