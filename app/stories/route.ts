@@ -33,6 +33,7 @@ export async function POST(request: Request) {
   try {
     story = JSON.parse(completion.choices[0].message.content || "");
   } catch (error) {
+    console.log(completion);
     throw new Error("Unable to parse chatGPT response");
   }
 

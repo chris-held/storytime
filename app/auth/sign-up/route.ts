@@ -1,3 +1,4 @@
+import { Database } from "@/types/supabase";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
@@ -9,12 +10,9 @@ export async function POST(request: Request) {
   const formData = await request.formData();
   const email = String(formData.get("email"));
   const password = String(formData.get("password"));
-  const supabase = createRouteHandlerClient({ cookies });
+  const supabase = createRouteHandlerClient<Database>({ cookies });
 
-  const {
-    error,
-    data: { user },
-  } = await supabase.auth.signUp({
+  const { error } = await supabase.auth.signUp({
     email,
     password,
     options: {
@@ -22,21 +20,7 @@ export async function POST(request: Request) {
     },
   });
 
-  if (!user) {
-    throw new Error("User not returned from signup");
-  }
-
-  const { error: profileError } = await supabase
-    .from("user_profile")
-    .insert([
-      {
-        free_runs_remaining: 3,
-        user_id: user.id,
-      },
-    ])
-    .select();
-
-  if (error || profileError) {
+  if (error) {
     return NextResponse.redirect(
       `${requestUrl.origin}/login?error=Could not authenticate user`,
       {
