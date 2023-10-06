@@ -1,8 +1,3 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
-import Link from "next/link";
-import { Database } from "@/types/supabase";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import StoryList from "@/components/StoryList";
 
 export const dynamic = "force-dynamic";
