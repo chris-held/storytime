@@ -1,8 +1,4 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
-import Link from "next/link";
-import { Card, CardDescription, CardHeader } from "./ui/card";
-import { Database } from "@/types/supabase";
+import { Card, CardHeader } from "./ui/card";
 
 type Props = {
   storiesRemaining: number;

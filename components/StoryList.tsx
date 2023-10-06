@@ -4,6 +4,8 @@ import Link from "next/link";
 import { Database } from "@/types/supabase";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
+export const dynamic = "force-dynamic";
+
 type Props = {
   limit?: number;
   userOnly?: boolean;
