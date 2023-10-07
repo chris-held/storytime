@@ -1,3 +1,9 @@
+// shenanigans here - openAI takes a long time to return a response, usually > 10 seconds
+// server functions have a 10s limit in the hosted environment but edge functions have 25s
+// however, edge runtime doesn't run on windows and I wrote most of this on a windows
+// box :)
+export const runtime =
+  process.env.NODE_ENV === "development" ? "nodejs" : "edge";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
@@ -16,14 +22,18 @@ export async function POST(request: Request) {
   const prompt = String(formData.get("prompt"));
   const supabase = createRouteHandlerClient<Database>({ cookies });
 
+  const content = `Write me a children's story. Structure the response as JSON with title, description, and content fields, 
+  with escaped newline characters so it can be parsed. Make this story appropriate for children regardless of the topic. 
+  Here is the topic: ${prompt}`;
+
+  console.log(content);
+
   const completion = await openai.chat.completions.create({
     messages: [
       { role: "system", content: "You are a helpful assistant." },
       {
         role: "user",
-        content: `Write me a children's story. Structure the response as JSON with title, description, and content fields, 
-                with escaped newline characters so it can be parsed. Make this story appropriate for children regardless of the topic. 
-                Here is the topic: ${prompt}`,
+        content,
       },
     ],
     model: "gpt-3.5-turbo",

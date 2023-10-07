@@ -28,7 +28,7 @@ const StoryList: React.FC<Props> = async ({ limit = 30, userOnly }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 auto-rows-max">
       {stories?.map((story) => (
-        <Link href={`/stories/${story.id}`}>
+        <Link key={story.id} href={`/stories/${story.id}`}>
           <Card className="h-full">
             <CardHeader>
               <h3 className="text-xl">{story.title}</h3>
