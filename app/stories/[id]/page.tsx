@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { Database } from "@/types/supabase";
 import { redirect } from "next/navigation";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import PlayStoryForm from "@/components/PlayStoryForm";
 
 export const dynamic = "force-dynamic";
 
@@ -20,7 +21,10 @@ export default async function Index({ params }: { params: { id: string } }) {
   return (
     <Card>
       <CardHeader>
-        <h1 className="text-2xl text-center mb-2">{data.title}</h1>
+        <div className="flex flex-row justify-between">
+          <h1 className="text-2xl w-full text-center mb-2">{data.title}</h1>
+          <PlayStoryForm text={`${data.title}. ${data.content}`} />
+        </div>
       </CardHeader>
       <CardContent>
         <p className="whitespace-pre-wrap">{data.content}</p>
