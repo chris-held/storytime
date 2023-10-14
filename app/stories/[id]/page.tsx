@@ -23,7 +23,7 @@ export default async function Index({ params }: { params: { id: string } }) {
       <CardHeader>
         <div className="flex flex-row justify-between">
           <h1 className="text-2xl w-full text-center mb-2">{data.title}</h1>
-          <PlayStoryForm text={`${data.title}. ${data.content}`} />
+          {/* <PlayStoryForm text={`${data.title}. ${data.content}`} /> */}
         </div>
       </CardHeader>
       <CardContent>
