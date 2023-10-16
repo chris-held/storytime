@@ -7,13 +7,23 @@ import PlayStoryForm from "@/components/PlayStoryForm";
 
 export const dynamic = "force-dynamic";
 
+const fetchStory = async (id: string) => {
+  const supabase = createServerComponentClient<Database>({ cookies });
+  return supabase.from("user_stories").select().eq("id", id).maybeSingle();
+};
+
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const { data } = await fetchStory(params.id);
+
+  return {
+    title: `Storytime - ${data?.title}`,
+    description: data?.description,
+  };
+}
+
 export default async function Index({ params }: { params: { id: string } }) {
   const supabase = createServerComponentClient<Database>({ cookies });
-  const { data, error } = await supabase
-    .from("user_stories")
-    .select()
-    .eq("id", params.id)
-    .maybeSingle();
+  const { data, error } = await fetchStory(params.id);
 
   if (!data) {
     redirect("/404");
@@ -23,7 +33,6 @@ export default async function Index({ params }: { params: { id: string } }) {
       <CardHeader>
         <div className="flex flex-row justify-between">
           <h1 className="text-2xl w-full text-center mb-2">{data.title}</h1>
-          {/* <PlayStoryForm text={`${data.title}. ${data.content}`} /> */}
         </div>
       </CardHeader>
       <CardContent>

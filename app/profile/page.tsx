@@ -33,6 +33,7 @@ export default async function Index() {
   return (
     <>
       <FreeStoryBanner storiesRemaining={free_stories_remaining ?? 0} />
+      <h2 className="text-2xl text-center">Your Stories</h2>
       <StoryList userOnly={true} />
     </>
   );

@@ -27,6 +27,14 @@ const StoryList: React.FC<Props> = async ({ limit = 30, userOnly }) => {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 auto-rows-max">
+      {!stories?.length && (
+        <p>
+          There don't seem to be any stories here.{" "}
+          <Link className="underline" href="/stories/new">
+            Why don't you create one?
+          </Link>
+        </p>
+      )}
       {stories?.map((story) => (
         <Link key={story.id} href={`/stories/${story.id}`}>
           <Card className="h-full">
